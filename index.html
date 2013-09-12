@@ -11,6 +11,7 @@
       height: 100%;
       position: relative;
       font-family: Oswald, Helvetica, Arial;
+      line-height: 1.4;
     }
     .claim {
       text-align: center;
@@ -69,6 +70,7 @@
     @media print{
       @page {size: landscape}
       .tell { display: none !important; }
+      .claim { height: 400pt;}
     }
   </style>
 </head>
@@ -97,7 +99,7 @@
     $gap = $('[contenteditable]');
     getClaim = function() { return $claim.text().replace(/\s+/g, ' ') };
     getGap = function() { return $gap.text().replace(/(^\s+|\s+$)/g,'') };
-    $claim.fitText().on('input', function() {
+    $claim.fitText(1.2).on('input', function() {
       $claim.addClass('done')
       history.replaceState( {}, 'claim', '?_=' + getGap())
     });
