@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>I'm a _geek!</title>
+
+  <link rel='stylesheet' id='google_fonts-css'  href='http://fonts.googleapis.com/css?family=Oswald&#038;subset=latin%2Ccyrillic-ext%2Cgreek-ext%2Ccyrillic&#038;ver=3.6' type='text/css' media='all' />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      position: relative;
+      font-family: Oswald, Helvetica, Arial;
+    }
+    .claim {
+      text-align: center;
+      height: 80%;
+
+      /* vertical alignment */
+      display:-ms-flexbox;
+      -ms-flex-pack:center;
+      -ms-flex-align:center;
+      display:-moz-box;
+      -moz-box-pack:center;
+      -moz-box-align:center;
+      display:-webkit-box;
+      -webkit-box-pack:center;
+      -webkit-box-align:center;
+      display:box;
+      box-pack:center;
+      box-align:center;
+    }
+    span[contenteditable] {
+      border-bottom: .1em solid #000;
+      outline: none !important;
+    }
+    span[contenteditable]:hover,
+    span[contenteditable]:focus {
+      border-bottom-color: #F13620;
+    }
+    .geeksGoneGlobal {
+      display: block;
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+    .tell {
+      display: none;
+      text-align: center;
+    }
+    .claim.done ~ .tell {
+      display: block;
+    }
+    .tell a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 3px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+    }
+    .tell a:focus,
+    .tell a:hover {
+      background: #F13620;
+    }
+    @media print{
+      @page {size: landscape}
+      .tell { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="claim">
+    I'm a<br>
+    <span contenteditable>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    Geek!
+  </div>
+
+  <div class="tell">
+    <a href="#" class="print">Print it!</a>
+    <a href="#" class="twitter">Tweet it!</a>
+    <a href="#" class="facebook">Post on facebook it!</a>
+  </div>
+
+  <a class="geeksGoneGlobal" href="http://geeksgoneglobal.com/">
+    <img src="http://geeksgoneglobal.com/wp-content/uploads/2013/08/web-logo-Geeks-Gone-Global3.png" alt="GeeksGoneGlobal">
+  </a>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <!-- http://fittextjs.com/ -->
+  <script>(function(e){e.fn.fitText=function(t,n){var r=t||1,i=e.extend({minFontSize:Number.NEGATIVE_INFINITY,maxFontSize:Number.POSITIVE_INFINITY},n);return this.each(function(){var t=e(this);var n=function(){t.css("font-size",Math.max(Math.min(t.width()/(r*10),parseFloat(i.maxFontSize)),parseFloat(i.minFontSize)))};n();e(window).on("resize.fittext orientationchange.fittext",n)})}})(jQuery)</script>
+  <script>
+    $claim = $('.claim');
+    $gap = $('[contenteditable]');
+    getClaim = function() { return $claim.text().replace(/\s+/g, ' ') };
+    getGap = function() { return $gap.text().replace(/(^\s+|\s+$)/g,'') };
+    $claim.fitText().on('input', function() {
+      $claim.addClass('done')
+      history.replaceState( {}, 'claim', '?_=' + getGap())
+    });
+    getUrl = function() { return location.href.replace(/\/$/, '') };
+    $gap.on('blur', function(ev) {
+      var text = getGap();
+      $(ev.target).text( text )
+
+      if (!text) {
+        $(ev.target).html( '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' )
+      }
+    });
+    // preset gap via url
+    if (location.search && location.search.substr(4)) {
+      $gap.text( decodeURIComponent(location.search.substr(3).replace(/\/$/, '')) )
+      $claim.addClass('done')
+    }
+    openWindow = function(url) {
+      settings = "width=700,height=480";
+      window.open(url, 'tellWindow', settings);
+    };
+    $('.print').on('click', function() { window.print(); return false});
+    $('.twitter').on('click', function() {
+      text = [getClaim(), getUrl()].join(' ')
+      openWindow("https://twitter.com/intent/tweet?button_hashtag=_geek&text="+encodeURIComponent( text ));
+       return false
+    })
+    $('.facebook').on('click', function() {
+      // var url = 'http://gr2m.github.io/IamA_Geek?' + encodeURIComponent( getGap() );
+      // openWindow( "http://www.facebook.com/sharer/sharer.php?u="+url );
+      openWindow( 'https://www.facebook.com/hashtag/_geek' );
+       return false
+    })
+  </script>
+
+</body>
+</html>
