@@ -1,7 +1,7 @@
 I'm a ________ Geek!
 ======================
 
-Go to http://gr2m.github.io/IamA_Geek, fill in the blank, and spread the word!
+Go to http://gr2m.github.io/ImA_Geek, fill in the blank, and spread the word!
 Find the other geeks on [Twitter](https://twitter.com/search?q=%23_geek) and [Facebook](https://www.facebook.com/hashtag/_geek).
 Bonus points if you print it out and take an image.
 
